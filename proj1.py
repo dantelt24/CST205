@@ -10,6 +10,18 @@ from PIL import Image
 import sys
 import os
 import glob #glob allows for unix-style filename pattern matching, allowing you to use regex to find the files you would like in python
+
+#getMedian function:purpose is to get median of lists
+def getMedian(lst_obj): #find median values 
+    srtlist = sorted(lst_obj)
+    lst_len = len(lst_obj)
+    index = (lst_len-1) / 2
+    if(lst_len%2):
+        return srtlist[index]
+    else:
+        return (srtlist[index] + srtlist[index+1])/2
+
+
 #list to store pixels
 red_pix_list = []
 green_pix_list = []
@@ -35,22 +47,19 @@ for filename in glob.glob('/home/ubuntu/workspace/cst205proj1/Proj1images/*.png'
 
 print len(img_list)#check if all images were loaded.
 i_width , i_height = img_list[0].size
-print i_width, i_height
+print i_width, i_height # testing if width and height were grabbed successfully
 
-print len(red_pix_list), len(green_pix_list), len(blue_pix_list)
+print len(red_pix_list), len(green_pix_list), len(blue_pix_list) #testing if values were added successfully
+
+#calculate median of the lists 
+r_median = getMedian(red_pix_list)
+g_median = getMedian(green_pix_list)
+b_median = getMedian(blue_pix_list)
+
+print r_median, g_median, b_median #test the median values of said list
 
 #/cst205proj1/images  -relative path
 #print "Hello, World"
 
 #git pracfile
-
-def getMedian(lst_obj): #find median values 
-    srtlist = sorted(lst_obj)
-    lst_len = len(lst_obj)
-    index = (lst_len-1) / 2
-    if(lst_len%2):
-        return srtlist[index]
-    else:
-        return (srtlist[index] + srtlist[index+1])/2
-
         
