@@ -21,6 +21,15 @@ for filename in glob.glob('/home/ubuntu/workspace/cst205proj1/Proj1images/*.png'
         except IOError: 
             print('An error occured opening the file.')
 print len(img_list)#check if all images were loaded.
+img_width , img_height = img_list[0].size
+print img_width, img_height
+
+red_pix_list = []
+green_pix_list = []
+blue_pix_list = []
+
+
+
 #/cst205proj1/images  -relative path
 #print "Hello, World"
 
