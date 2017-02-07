@@ -69,7 +69,7 @@ for x in range(new_img_width):
         #print r_median, g_median, b_median # checking that i am getting median values
         new_img.putpixel((x,y), (r_median, g_median, b_median)) #place the median values into the new image
 
-new_img.save("combined.png") #save the new image
+new_img.save('/home/ubuntu/workspace/cst205proj1/Proj1images/combined.png') #save the new image
 new_img.show()#show the image
 
 #/cst205proj1/images  -relative path
