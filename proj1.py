@@ -22,11 +22,6 @@ def getMedian(lst_obj): #find median values
         return (srtlist[index] + srtlist[index+1])/2
 
 
-#list to store pixels
-red_pix_list = []
-green_pix_list = []
-blue_pix_list = []
-
 #list to store images
 img_list=[]
 for filename in glob.glob('/home/ubuntu/workspace/cst205proj1/Proj1images/*.png'): #regex looking for images that end in .png format, needed to use absolute path not relative
@@ -34,32 +29,50 @@ for filename in glob.glob('/home/ubuntu/workspace/cst205proj1/Proj1images/*.png'
         try:
             img=Image.open(filename)
             img_width, img_height = img.size
+            ''' way to loop through images
             for x in range(img_width):
                 for y in range(img_height):
                     r,g,b = img.getpixel((x,y))
                     red_pix_list.append(r)
                     green_pix_list.append(g)
                     blue_pix_list.append(b)
+            '''
             img_list.append(img)
-            print(img.format, img.size, img.mode)#tesing image info
+            #print(img.format, img.size, img.mode)#tesing image info
         except IOError: 
             print('An error occured opening the file.')
 
-print len(img_list)#check if all images were loaded.
-i_width , i_height = img_list[0].size
-print i_width, i_height # testing if width and height were grabbed successfully
+#print len(img_list)#check if all images were loaded.
+i_size = img_list[0].size
+#print i_size
+#i_width , i_height = img_list[0].size
+#print i_width, i_height # testing if width and height were grabbed successfully
 
-print len(red_pix_list), len(green_pix_list), len(blue_pix_list) #testing if values were added successfully
+#create new image
+new_img = Image.new('RGB', i_size)
+new_img_width, new_img_height = new_img.size
 
-#calculate median of the lists 
-r_median = getMedian(red_pix_list)
-g_median = getMedian(green_pix_list)
-b_median = getMedian(blue_pix_list)
+for x in range(new_img_width):
+    for y in range(new_img_height):
+        #list to store pixels
+        red_pix_list = []
+        green_pix_list = []
+        blue_pix_list = []
+        for img_num in range(0, len(img_list)):
+            r,g,b = img_list[img_num].getpixel((x,y))
+            red_pix_list.append(r)
+            green_pix_list.append(g)
+            blue_pix_list.append(b)
+        r_median = getMedian(red_pix_list)
+        g_median = getMedian(green_pix_list)
+        b_median = getMedian(blue_pix_list)
+        #print r_median, g_median, b_median # checking that i am getting median values
+        new_img.putpixel((x,y), (r_median, g_median, b_median)) #place the median values into the new image
 
-print r_median, g_median, b_median #test the median values of said list
+new_img.save("combined.png") #save the new image
+new_img.show()#show the image
 
 #/cst205proj1/images  -relative path
 #print "Hello, World"
 
 #git pracfile
-        
