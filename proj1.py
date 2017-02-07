@@ -10,25 +10,34 @@ from PIL import Image
 import sys
 import os
 import glob #glob allows for unix-style filename pattern matching, allowing you to use regex to find the files you would like in python
-
-img_list=[]
-for filename in glob.glob('/home/ubuntu/workspace/cst205proj1/Proj1images/*.png'): #regex looking for images that end in .png format, needed to use absolute path not relative
-        #error checking
-        try:
-            img=Image.open(filename)
-            img_list.append(img)
-            print(img.format, img.size, img.mode)#tesing image info
-        except IOError: 
-            print('An error occured opening the file.')
-print len(img_list)#check if all images were loaded.
-img_width , img_height = img_list[0].size
-print img_width, img_height
-
+#list to store pixels
 red_pix_list = []
 green_pix_list = []
 blue_pix_list = []
 
+#list to store images
+img_list=[]
+for filename in glob.glob('/home/ubuntu/workspace/cst205proj1/Proj1images/*.png'): #regex looking for images that end in .png format, needed to use absolute path not relative
+        #error checking for getting pictures and their pixels rgb values
+        try:
+            img=Image.open(filename)
+            img_width, img_height = img.size
+            for x in range(img_width):
+                for y in range(img_height):
+                    r,g,b = img.getpixel((x,y))
+                    red_pix_list.append(r)
+                    green_pix_list.append(g)
+                    blue_pix_list.append(b)
+            img_list.append(img)
+            print(img.format, img.size, img.mode)#tesing image info
+        except IOError: 
+            print('An error occured opening the file.')
 
+print len(img_list)#check if all images were loaded.
+i_width , i_height = img_list[0].size
+print i_width, i_height
+
+print len(red_pix_list), len(green_pix_list), len(blue_pix_list)
 
 #/cst205proj1/images  -relative path
 #print "Hello, World"
